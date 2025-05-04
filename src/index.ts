@@ -1,5 +1,5 @@
 import { fastify } from "fastify";
-import { UsersRoutes } from "./modules/users.routes";
+import { UsersRoutes } from "./modules/users/users.routes";
 
 const server = fastify({ logger: true });
 
