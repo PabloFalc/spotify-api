@@ -36,7 +36,8 @@ export default async function verifyToken(
         // Valida se o usuário é real
         const userValidate = await verifyUserExist(
             tokenDecoded.id,
-            tokenDecoded.email
+            tokenDecoded.email,
+            tokenDecoded.name
         );
 
         if (!userValidate) {
@@ -50,7 +51,11 @@ export default async function verifyToken(
     }
 }
 
-async function verifyUserExist(id: string, email: string): Promise<boolean> {
+async function verifyUserExist(
+    id: string,
+    email: string,
+    name: string
+): Promise<boolean> {
     try {
         const user = await prisma.user.findUnique({
             where: { id },
@@ -65,6 +70,10 @@ async function verifyUserExist(id: string, email: string): Promise<boolean> {
         }
 
         if (email !== user.email) {
+            return false;
+        }
+
+        if (name !== user.name) {
             return false;
         }
 
