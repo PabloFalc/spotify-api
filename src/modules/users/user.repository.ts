@@ -1,5 +1,6 @@
 import { prisma } from "../../database/prisma";
 import type {
+    UserBase,
     UserCreateInput,
     UserPublic,
     UserUpdateInput,
@@ -38,6 +39,20 @@ export class UsersRepository {
             return result;
         } catch {
             return null;
+        }
+    }
+
+    static async getUserForAuth(email: string): Promise<UserBase | null> {
+        try {
+            const result = await prisma.user.findFirst({ where: { email } });
+
+            if (!result) {
+                return null;
+            }
+
+            return result;
+        } catch (err) {
+            throw new Error("Erro interno do servidor");
         }
     }
 }
