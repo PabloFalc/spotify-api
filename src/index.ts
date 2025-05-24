@@ -4,7 +4,7 @@ import fastifyCookie from "@fastify/cookie";
 import { AuthRoutes } from "./modules/auth/auth.routes";
 import { SongsRoutes } from "./modules/songs/songs.routes";
 
-const server = fastify({ logger: true });
+const server = fastify();
 
 server.register(fastifyCookie, {
     secret: process.env.JWT_SECRET,
@@ -22,11 +22,12 @@ server.register(SongsRoutes, {
     prefix: "/songs",
 });
 
-server.listen({ port: 3000 }, (port, err) => {
-    if (err) {
-        console.error(err);
-        process.exit();
-    }
-
-    console.log(`Server is running on port: http://localhost:${port}`);
-});
+server
+    .listen({ port: 3100 })
+    .then(() => {
+        console.log("Server is running on: http://localhost:3100");
+    })
+    .catch((err) => {
+        console.error("erro", err);
+        process.exit(1);
+    });

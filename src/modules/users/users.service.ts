@@ -25,6 +25,14 @@ class UsersService {
             return reply.badRequest(message);
         }
 
+        const alredyExist = await UsersRepository.getUserForAuth(
+            data.data.email
+        );
+
+        if (alredyExist) {
+            return reply.badRequest("usuário já cadastrado");
+        }
+
         const result = await this.repository.create(data.data);
 
         if (!result) {

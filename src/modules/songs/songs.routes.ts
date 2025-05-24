@@ -1,17 +1,22 @@
 import type { FastifyInstance } from "fastify";
 import type { SongCreateInput, SongUpdateInput } from "../../dtos/songs.dto";
 import { SongsService } from "./songs.service";
+import verifyToken from "../../middlewares/middleware";
 
 export async function SongsRoutes(server: FastifyInstance) {
     const service = new SongsService();
 
-    server.post<{ Body: SongCreateInput }>("/register", async (req, reply) => {
-        const result = await service.create(req.body);
+    server.post<{ Body: SongCreateInput }>(
+        "/register",
+        { preHandler: verifyToken },
+        async (req, reply) => {
+            const result = await service.create(req.body);
 
-        return reply
-            .code(result.code)
-            .send({ msg: result.msg, data: result.data });
-    });
+            return reply
+                .code(result.code)
+                .send({ msg: result.msg, data: result.data });
+        }
+    );
 
     // list & filter
     server.get("/search", async (_, reply) => {
@@ -43,11 +48,15 @@ export async function SongsRoutes(server: FastifyInstance) {
     );
 
     // Delete
-    server.delete<{ Params: { id: string } }>("/delete", async (req, reply) => {
-        const result = await service.delete(req.params.id);
+    server.delete<{ Params: { id: string } }>(
+        "/delete",
+        { preHandler: verifyToken },
+        async (req, reply) => {
+            const result = await service.delete(req.params.id);
 
-        return reply
-            .code(result.code)
-            .send({ msg: result.msg, data: result.data });
-    });
+            return reply
+                .code(result.code)
+                .send({ msg: result.msg, data: result.data });
+        }
+    );
 }
