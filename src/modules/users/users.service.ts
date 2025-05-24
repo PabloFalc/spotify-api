@@ -4,6 +4,7 @@ import {
     type UserCreateInput,
     type UserPublic,
     UserUpdateSchema,
+    type UserBase,
 } from "../../dtos/users.dto";
 import { reply, type ReplyType } from "../../utils/BaseReply";
 import ZodErroFormat from "../../utils/zod.error.format";
@@ -75,6 +76,20 @@ class UsersService {
     async delete(id: string): Promise<ReplyType<null>> {
         const result = await this.repository.delete(id);
         return reply.success("Usuário deletado com sucesso");
+    }
+
+    static async getUserForAuth(email: string): Promise<UserBase | null> {
+        try {
+            const result = await UsersRepository.getUserForAuth(email);
+
+            if (!result) {
+                return null;
+            }
+
+            return result;
+        } catch (err) {
+            return null;
+        }
     }
 }
 

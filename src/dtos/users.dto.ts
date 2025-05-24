@@ -41,6 +41,13 @@ export const UserCreateSchema = z.object({
     password: z.string().min(6).max(254),
 });
 
+export const UserAuthSchema = UserBaseSchema.pick({
+    email: true,
+    password: true,
+});
+
+export type UserAuthInput = z.infer<typeof UserAuthSchema>;
+
 export const UserUpdateSchema = UserCreateSchema.partial();
 
 export type UserCreateInput = z.infer<typeof UserCreateSchema>;
