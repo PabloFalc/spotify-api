@@ -1,25 +1,25 @@
 import { z } from "zod";
 
 const SongBaseSchema = z.object({
-	id: z.string().uuid(),
-	title: z.string().max(150).nonempty(),
-	imgUrl: z.string().max(254),
-	likesCount: z.number(),
+    id: z.string().uuid(),
+    title: z.string().max(150).nonempty(),
+    imgUrl: z.string().max(254),
+    likesCount: z.number(),
 
-	createdAt: z.string().datetime(),
-	updatedAt: z.string().datetime(),
+    createdAt: z.string().datetime(),
+    updatedAt: z.string().datetime(),
 });
 
-const SongCreateSchema = SongBaseSchema.omit({
-	id: true,
-	createdAt: true,
-	updatedAt: true,
+export const SongCreateSchema = SongBaseSchema.omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
 });
 
-const SongUpdateSchema = SongBaseSchema.omit({
-	id: true,
-	createdAt: true,
-	updatedAt: true,
+export const SongUpdateSchema = SongBaseSchema.omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
 }).partial();
 
 export type Song = z.infer<typeof SongBaseSchema>;
