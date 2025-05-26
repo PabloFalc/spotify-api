@@ -182,11 +182,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://neondb_owner:npg_pK6wVT4NEgRv@ep-young-voice-acns8e8n-pooler.sa-east-1.aws.neon.tech/spotify-api-db?sslmode=require"
+        "value": null
       }
     }
   },
