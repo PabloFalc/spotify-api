@@ -4,6 +4,7 @@ const SongBaseSchema = z.object({
     id: z.string().uuid(),
     title: z.string().max(150).nonempty(),
     imgUrl: z.string().max(254),
+    songUrl: z.string().max(254),
     likesCount: z.number(),
 
     createdAt: z.string().datetime(),
@@ -14,6 +15,7 @@ export const SongCreateSchema = SongBaseSchema.omit({
     id: true,
     createdAt: true,
     updatedAt: true,
+    likesCount: true,
 });
 
 export const SongUpdateSchema = SongBaseSchema.omit({

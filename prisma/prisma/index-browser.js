@@ -125,6 +125,7 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  img: 'img',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -139,6 +140,7 @@ exports.Prisma.SongScalarFieldEnum = {
   id: 'id',
   title: 'title',
   imgUrl: 'imgUrl',
+  songUrl: 'songUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

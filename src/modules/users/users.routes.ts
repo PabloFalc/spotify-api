@@ -6,6 +6,8 @@ import verifyToken from "../../middlewares/middleware";
 export async function UsersRoutes(server: FastifyInstance) {
     const service = new UsersService();
 
+    // Infelizmente eu não vou poder testar o middlware pq apanhei pra fazer a auth no front
+
     server.post<{ Body: UserCreateInput }>("/register", async (req, reply) => {
         const result = await service.create(req.body);
 
@@ -15,7 +17,7 @@ export async function UsersRoutes(server: FastifyInstance) {
     });
 
     // list & filter
-    server.get("/search", { preHandler: verifyToken }, async (_, reply) => {
+    server.get("/search", async (_, reply) => {
         const result = await service.list();
         return reply
             .code(result.code)
@@ -25,7 +27,7 @@ export async function UsersRoutes(server: FastifyInstance) {
     // find by id
     server.get<{ Params: { id: string } }>(
         "/find/:id",
-        { preHandler: verifyToken },
+
         async (req, reply) => {
             const result = await service.findById(req.params.id);
 
@@ -38,7 +40,6 @@ export async function UsersRoutes(server: FastifyInstance) {
     // Update
     server.put<{ Params: { id: string }; Body: UserUpdateInput }>(
         "/update",
-        { preHandler: verifyToken },
         async (req, reply) => {
             const result = await service.update(req.params.id, req.body);
 
@@ -49,15 +50,11 @@ export async function UsersRoutes(server: FastifyInstance) {
     );
 
     // Delete
-    server.delete<{ Params: { id: string } }>(
-        "/delete",
-        { preHandler: verifyToken },
-        async (req, reply) => {
-            const result = await service.delete(req.params.id);
+    server.delete<{ Params: { id: string } }>("/delete", async (req, reply) => {
+        const result = await service.delete(req.params.id);
 
-            return reply
-                .code(result.code)
-                .send({ msg: result.msg, data: result.data });
-        }
-    );
+        return reply
+            .code(result.code)
+            .send({ msg: result.msg, data: result.data });
+    });
 }

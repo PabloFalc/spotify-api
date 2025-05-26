@@ -17,6 +17,7 @@ model User {
   name      String       @db.VarChar(50)
   email     String       @db.VarChar(254)
   password  String       @db.VarChar(254)
+  img String @db.VarChar(254)
   
   followedBy Follow[]    @relation("FollowedBy") // seguindo por
   following  Follow[]    @relation("Following")  // seguindo
@@ -47,6 +48,7 @@ model Song{
   id String @id @default(uuid())
   title   String @db.VarChar(150)
   imgUrl String @db.VarChar(254)
+  songUrl String @db.VarChar(254)
   likes Like[] @relation("Likes")
 
   createdAt DateTime @default(now())

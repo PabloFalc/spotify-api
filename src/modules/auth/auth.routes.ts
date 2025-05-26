@@ -21,9 +21,10 @@ export async function AuthRoutes(fastify: FastifyInstance) {
                 }
 
                 setAuthCookie(reply, tokenResponse.token);
-                return reply
-                    .code(200)
-                    .send({ message: "Login realizado com sucesso" });
+                return reply.code(200).send({
+                    message: "Login realizado com sucesso",
+                    data: tokenResponse.token,
+                });
             default:
                 return reply
                     .code(tokenResponse.code)

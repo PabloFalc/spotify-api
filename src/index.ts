@@ -4,10 +4,18 @@ import fastifyCookie from "@fastify/cookie";
 import { AuthRoutes } from "./modules/auth/auth.routes";
 import { SongsRoutes } from "./modules/songs/songs.routes";
 
+import cors from "@fastify/cors";
+
 const server = fastify();
 
 server.register(fastifyCookie, {
     secret: process.env.JWT_SECRET,
+});
+
+server.register(cors, {
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
 });
 
 server.register(AuthRoutes, {
