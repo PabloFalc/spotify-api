@@ -27,10 +27,11 @@ server.register(users_routes_1.UsersRoutes, {
 server.register(songs_routes_1.SongsRoutes, {
     prefix: "/songs",
 });
+const port = Number(process.env.PORT) || 3100;
 server
-    .listen({ port: 3100 })
+    .listen({ port, host: "0.0.0.0" })
     .then(() => {
-    console.log("Server is running on: http://localhost:3100");
+    console.log(`Server is running on: http://localhost:${port}`);
 })
     .catch((err) => {
     console.error("erro", err);
